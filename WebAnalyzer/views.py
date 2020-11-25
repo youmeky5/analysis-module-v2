@@ -8,9 +8,24 @@ from WebAnalyzer.serializers import *
 from rest_framework import viewsets, generics
 
 
-class ImageViewSet(viewsets.ModelViewSet):
-    queryset = ImageModel.objects.all()
-    serializer_class = ImageSerializer
+class VideoViewSet(viewsets.ModelViewSet):
+    queryset = VideoModel.objects.all()
+    serializer_class = VideoSerializer
+
+    def get_queryset(self):
+        queryset = self.queryset
+        queryset = queryset.order_by('-token')
+
+        token = self.request.query_params.get('token', None)
+        if token is not None:
+            queryset = queryset.filter(token=token)
+
+        return queryset
+
+
+class FrameViewSet(viewsets.ModelViewSet):
+    queryset = FrameModel.objects.all()
+    serializer_class = FrameSerializer
 
     def get_queryset(self):
         queryset = self.queryset

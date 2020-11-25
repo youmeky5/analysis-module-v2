@@ -29,9 +29,10 @@ import WebAnalyzer.views
 
 router = DefaultRouter()
 
-router.register(r'', WebAnalyzer.views.ImageViewSet)
+router.register(r'video', WebAnalyzer.views.VideoViewSet)
+router.register(r'frame', WebAnalyzer.views.FrameViewSet)
 
-urlpatterns = [
+urlpatterns = static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + [
     path('admin/', admin.site.urls),
-    path('', include(router.urls)),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('api/', include(router.urls)),
+]
