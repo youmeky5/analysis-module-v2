@@ -1,4 +1,6 @@
+import json
 import os
+import ast
 from Modules.dummy.example import test
 
 class Dummy:
@@ -12,13 +14,29 @@ class Dummy:
         model_path = os.path.join(self.path, "model.txt")
         self.model = open(model_path, "r")
 
-    def inference_by_path(self, image_path):
+    def inference_by_data(self, aggregation_result):
+        aggregation_result = ast.literal_eval(aggregation_result)
         result = []
         # TODO
-        #   - Inference using image path
-        import time
-        time.sleep(2)
-        result = [[(0, 0, 0, 0), {'TEST': 0.95, 'DEBUG': 0.05}], [(100, 100, 100, 100), {'TEST': 0.95, 'DEBUG': 0.05}]]
+        #   - Inference using aggregation result
+        #   - how to use aggregation_result
+        #     for data in aggregation_result :
+        #         aggregation_result[data] # Using this data
+        result = {"aggregation_result": [
+            {
+                # 1 timestamp & multiple class
+                'label': [
+                    {'description': 'word_name', 'score': 1.0},
+                    {'description': 'word_name', 'score': 1.0}
+                ],
+            },
+            {
+                # 1 timestamp & 1 class
+                'label': [
+                    {'description': 'word_name', 'score': 1.0}
+                ],
+            }
+        ]}
         self.result = result
 
         return self.result
